@@ -63,8 +63,8 @@ app.get('/', function(req, res){
 
 app.get('/game/:action', function(req, res){
   // Check if the user is logged in to Facebook 
-  console.log("COOKIES: ", req.cookies);
-  console.log("SESSION: ", req.session);
+  //console.log("COOKIES: ", req.cookies);
+  //console.log("SESSION: ", req.session);
   var slug = req.params.slug;
   var action = req.params.action;
   var user = facebook.getUserFromCookie(req.cookies, FB_APP_ID, FB_APP_SECRET);
@@ -74,19 +74,27 @@ app.get('/game/:action', function(req, res){
     graph.getObject('me', function(error, user){
       console.log("USER: ", user); 
       if (action=="start"){
-        GAMES[user.id] = {id: user.id, owner: user.name };
-        console.log(GAMES);
+        GAMES[user.id] = {owner: user.name, players: {} };
+        console.log("Current GAME: ", GAMES[user.id]);
+        GAMES[user.id].players[user.id] = {details: user };
+        console.log("ALL GAMES: ", GAMES);
         res.redirect('/game/' + user.id);
       }else if(action=="join"){
         //Need to find current games then parse it for friends
         //Display a list of friends playing then they can select to join
-        console.log("Parse Current Games for Friend ID's!");
+        console.log("Parse Current Games for Friend ID's!", GAMES);
         res.render('join', {title: 'Join a Game', games: GAMES});
       }else{
         console.log("LOGGED IN AND SOMETHING ELSE!");
         console.log(GAMES[req.params.action]);
         //ADD PLAYER TO GAME OBJECT
-        res.render('game', {title: 'Game ' + req.params.action, game: GAMES[req.params.action]});
+        var game_id = req.params.action;
+        console.log("GAME_ID: ", game_id);
+        GAMES[game_id].players[user.id] = {details: user};
+        _.each(GAMES, function(game){
+          console.log(game);
+        });
+        res.render('game', {title: 'Game ' + req.params.action, game_id: game_id, game: GAMES[game_id]});
       }
     });
   } else {
