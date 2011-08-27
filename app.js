@@ -90,11 +90,17 @@ app.get('/game/:action', function(req, res){
         //ADD PLAYER TO GAME OBJECT
         var game_id = req.params.action;
         console.log("GAME_ID: ", game_id);
-        GAMES[game_id].players[user.id] = {details: user};
-        _.each(GAMES, function(game){
-          console.log(game);
-        });
-        res.render('game', {title: 'Game ' + req.params.action, game_id: game_id, game: GAMES[game_id]});
+        if(GAMES[game_id]){
+          GAMES[game_id].players[user.id] = {details: user};
+        }else{
+          GAMES[user.id] = {owner: user.name, players: {} };
+          console.log("Current GAME: ", GAMES[user.id]);
+          GAMES[user.id].players[user.id] = {details: user };
+        }
+          _.each(GAMES, function(game){
+            console.log(game);
+          });
+          res.render('game', {title: 'Game ' + req.params.action, game_id: game_id, game: GAMES[game_id]});
       }
     });
   } else {
@@ -138,10 +144,10 @@ io.configure(function () {
 io.sockets.on('connection', function(socket){
   console.log("Server Connection to Socket.io");
 
-  socket.on('join game', function(game, player) {
-    socket.join(game.id);
-    console.log("Joined socket room: ", game.id);
-    socket.broadcast.to(game.id).emit('player add', player);
+  socket.on('join game', function(player) {
+    socket.join(player.gameId);
+    console.log("Joined socket room: ", player.gameId);
+    socket.broadcast.to(player.gameId).emit('player add', player);
     console.log("Someon joined a game!");
   }); 
 
