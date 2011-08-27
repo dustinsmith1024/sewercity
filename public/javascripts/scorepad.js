@@ -2,7 +2,7 @@ $(document).ready(function() {
 
 var ACTIVE_PLAYER=0;
 
-var socket = io.connect('http://localhost:3000/');
+var socket = io.connect('http://nko2-sewercity.herokuapp.com/');
 
 socket.on('disconnect', function(){
   console.log("Server Connection Dropped!");
