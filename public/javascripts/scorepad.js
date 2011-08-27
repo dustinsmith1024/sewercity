@@ -12,26 +12,37 @@ socket.on('disconnect', function(){
   console.log("Server Connection Dropped!");
 });
 
-socket.on('connection', function(){
-  console.log("Server Connection to Socket.io");
+function gameId(){
+  var game_id = $("#game-id").val();
+  if (game_id && game_id!=""){
+    return game_id;
+  }else{
+    return false;
+  }
+}
+socket.on('connect', function(){
+  console.log("Connected to server via socketastics");
+  if(gameId()){
+    socket.emit('join game', {id:gameId()});
+  }
 });
 
-        FB.init({
-          appId:'112933112052348', cookie:true,
-          status:true, xfbml:true
-        });
+if($("#fb-root").length){
+  FB.init({
+    appId:'112933112052348', cookie:true,
+    status:true, xfbml:true
+  });
 
+  FB.api('/me', function(user) {
+    if(user != null) {
+      // var image = document.getElementById('image');
+      // image.src = 'https://graph.facebook.com/' + user.id + '/picture';
+      // var name = document.getElementById('name');
+      // name.innerHTML = user.name
+    }
+  });
 
-         FB.api('/me', function(user) {
-           if(user != null) {
-             // var image = document.getElementById('image');
-             // image.src = 'https://graph.facebook.com/' + user.id + '/picture';
-             // var name = document.getElementById('name');
-             // name.innerHTML = user.name
-           }
-         });
-
-
+}
 socket.on('score-push', function(data) {
     console.log('Received: ', data);
     $p = $("tr#player-" + data.player);
@@ -41,7 +52,7 @@ socket.on('score-push', function(data) {
 
 socket.on('player add', function(data) {
   console.log('Recieved: ',  data);
-  $("#player-list").append('<tr id="player-' + data.player + '" data-player="' + data.player + '" data-player-name="' + data.playerName + '" data-score="0" ><td class="playerName">' + data.playerName + '</td><td class="score">' + data.score + '</td><td></td></tr>');
+  $("#player-list").append('<tr id="player-' + data.player + '" data-game-id=" '+ gameId() + '" data-player="' + data.player + '" data-player-name="' + data.playerName + '" data-score="0" ><td class="playerName">' + data.playerName + '</td><td class="score">' + data.score + '</td><td></td></tr>');
 });
 
 $("#player-actions > li > a").live("click", function(event) {
@@ -75,7 +86,7 @@ $("a.add-player").click(function(event){
   var name = prompt("Player Namer:", "");
   $pl = $("#player-list");
   var players = $pl.children().length + 1;
-  $pl.append('<tr id="player-' + players + '" data-player="' + players + '" data-player-name="' + name + '" data-score="0" ><td class="playerName" >' + name + '</td><td class="score">0</td><td></td></tr>');
+  $pl.append('<tr id="player-' + players + '" data-game-id=" '+ gameId() + '" data-player="' + players + '" data-player-name="' + name + '" data-score="0" ><td class="playerName" >' + name + '</td><td class="score">0</td><td></td></tr>');
   var data = $pl.find("tr:last").data();
   console.log("Added player: ", data);
   socket.emit("add player", data);

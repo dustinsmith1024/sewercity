@@ -1,5 +1,6 @@
 
 - if (game)
+  input(type='hidden', name='game_id', id="game-id", value="#{game.id}")
   div#fb-root
   table
     thead
@@ -9,7 +10,7 @@
         th
           Score
     tbody#player-list
-      tr#player-1(data-player="1", data-player-name="Dusty", data-score="0")
+      tr#player-1(data-game-id="#{game.id}", data-player="1", data-player-name="#{game.owner}", data-score="0")
         td.playerName #{game.owner}
         td.score 0
 

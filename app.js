@@ -75,6 +75,7 @@ app.get('/game/:action', function(req, res){
       }else{
         console.log("LOGGED IN AND SOMETHING ELSE!");
         console.log(GAMES[req.params.action]);
+        //ADD PLAYER TO GAME OBJECT
         res.render('game', {title: 'Game ' + req.params.action, game: GAMES[req.params.action]});
       }
     });
@@ -118,7 +119,13 @@ io.configure(function () {
 
 io.sockets.on('connection', function(socket){
   console.log("Server Connection to Socket.io");
-  
+
+  socket.on('join game', function(game) {
+    socket.join(game.id);
+    socket.broadcast.to(game.id).send('new member!');
+    console.log("Someon joined a game!");
+  }); 
+
   socket.on('start game', function(game) {
     // Add the game to the socket
     // Add to global games list??
@@ -128,20 +135,13 @@ io.sockets.on('connection', function(socket){
     });
   });
 
-  socket.on('set username', function(name) {
-    socket.set('username', name, function() {
-      console.log("Username set");
-      socket.emit("name set");
-    });
-  });
-
   socket.on('update score', function(score) {
       console.log('Score ' + score);
-      socket.broadcast.emit('score-push', score);
+      socket.broadcast.to(score.gameId).emit('score-push', score);
   });
 
   socket.on('add player', function(player) {
-    socket.broadcast.emit('player add', player);
+    socket.broadcast.to(player.gameId).emit('player add', player);
   });
 
 });
