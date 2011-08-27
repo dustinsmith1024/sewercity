@@ -11,9 +11,15 @@
           Score
     tbody#player-list
       for player, player_id in game.players
-        tr(id="player-#{player_id}", data-game-id="#{game_id}", data-player="#{player_id}", data-player-name="#{player.details.name}", data-score="0")
-          td.playerName #{player.details.name}
-          td.score 0
+        - if (player.current)
+          tr(id="player-#{player_id}", class="current", data-game-id="#{game_id}", data-player="#{player_id}", data-player-name="#{player.details.name}", data-score="0")
+            td.playerName #{player.details.name}
+            td.score 0
+        - else
+          tr(id="player-#{player_id}", data-game-id="#{game_id}", data-player="#{player_id}", data-player-name="#{player.details.name}", data-score="0")
+            td.playerName #{player.details.name}
+            td.score 0
+
 
   ul#game-actions Actions:
     li

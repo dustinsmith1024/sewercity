@@ -24,7 +24,7 @@ function gameId(){
 }
 socket.on('connect', function(){
   console.log("Connected to server via socketastics");
-  var data = $("#player-list tr:last").data();
+  var data = $("#player-list tr.current").data();
   if(gameId()){
     socket.emit('join game', data);
   }
@@ -57,9 +57,7 @@ socket.on('score-push', function(data) {
 });
 
 socket.on('player add', function(data) {
-  
-  console.log('2Recieved: ',  data.gameId);
- 
+  console.log('Recieved: ',  data.gameId);
   $("#player-list").append('<tr id="player-' + data.player + '" data-game-id=" '+ data.gameId + '" data-player="' + data.player + '" data-player-name="' + data.playerName + '" data-score="0" ><td class="playerName">' + data.playerName + '</td><td class="score">' + data.score + '</td><td></td></tr>');
 });
 
