@@ -57,7 +57,9 @@ socket.on('score-push', function(data) {
 });
 
 socket.on('player add', function(data) {
-  console.log('Recieved: ',  data);
+  
+  console.log('2Recieved: ',  data.gameId);
+ 
   $("#player-list").append('<tr id="player-' + data.player + '" data-game-id=" '+ data.gameId + '" data-player="' + data.player + '" data-player-name="' + data.playerName + '" data-score="0" ><td class="playerName">' + data.playerName + '</td><td class="score">' + data.score + '</td><td></td></tr>');
 });
 
