@@ -1,0 +1,34 @@
+
+- if (game)
+  div#fb-root
+  table
+    thead
+      tr
+        th
+          Player
+        th
+          Score
+    tbody#player-list
+      tr#player-1(data-player="1", data-player-name="Dusty", data-score="0")
+        td.playerName #{game.owner}
+        td.score 0
+
+  ul#game-actions Actions:
+    li
+      a(href="#add-player", class="add-player")
+        + Player
+
+  ul#player-actions Actions:
+    li
+      a(href="#", data-value="-1")
+        |-1
+      a(href="#", data-value="-10")
+        |-10
+      a(href="#", data-value="+1")
+        |+1
+      a(href="#", data-value="+10")
+        |+10
+
+- else
+  p Looks like something happend and this is not a valid game ID - SORRY!
+

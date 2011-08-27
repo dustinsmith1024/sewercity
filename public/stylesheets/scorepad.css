@@ -1,5 +1,4 @@
 html, body {
-  height: 100%;
 }
 #body {
   left: 0;
@@ -13,6 +12,15 @@ html, body {
 .active {
   color: red;
 }
-#player-actions, #player-actions li, #game-action, #game-actions li {
+nav#footer{
+  margin-top: 10px;
+}
+ul {
+  padding: 0;
+}
+li {
+  padding: 5px;
+}
+nav#footer ul, nav#footer ul li, #player-actions, #player-actions li, #game-action, #game-actions li {
   display:inline;
 }

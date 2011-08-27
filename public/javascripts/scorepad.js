@@ -1,5 +1,5 @@
 $(document).ready(function() {
-
+//alert("supp?");
 var ACTIVE_PLAYER=0;
 
 if(window.location.host=="localhost:3000"){
@@ -16,12 +16,18 @@ socket.on('connection', function(){
   console.log("Server Connection to Socket.io");
 });
 
+        FB.init({
+          appId:'112933112052348', cookie:true,
+          status:true, xfbml:true
+        });
+
+
          FB.api('/me', function(user) {
            if(user != null) {
-              var image = document.getElementById('image');
-              image.src = 'https://graph.facebook.com/' + user.id + '/picture';
-              var name = document.getElementById('name');
-              name.innerHTML = user.name
+             // var image = document.getElementById('image');
+             // image.src = 'https://graph.facebook.com/' + user.id + '/picture';
+             // var name = document.getElementById('name');
+             // name.innerHTML = user.name
            }
          });
 

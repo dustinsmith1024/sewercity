@@ -1,0 +1,22 @@
+!!! 5
+html
+  title ScorePad - #{title}
+  link(rel='stylesheet', href='/stylesheets/scorepad.css')
+
+  body
+    h1: a(href="/") ScorePad
+
+    section#body!= body
+
+    nav#footer
+      ul
+        li: a(href="/", title="Sup Homie?!") Home
+        li: a(href="/vote", title="Pedro?") Vote for me!
+ 
+    section#js-loads
+      script(type='text/javascript', src='http://connect.facebook.net/en_US/all.js')
+      script(type='text/javascript', src='https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js');
+      script(type='text/javascript', src='http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.1.6/underscore-min.js')
+      script(type='text/javascript', src='/socket.io/socket.io.js')
+      script(type='text/javascript', src='/javascripts/scorepad.js')
+
