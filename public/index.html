@@ -15,6 +15,15 @@
   <div id="body">
      <h1>ScorePad</h1>
      <p>Keep score for all your card games, board games, or drinking games!  Post your scores and track your records against all your friends!</p>
+      <div id="fb-root"></div>
+      <script src="http://connect.facebook.net/en_US/all.js"></script>
+      <script>
+         FB.init({ 
+            appId:'112933112052348', cookie:true, 
+            status:true, xfbml:true 
+         });
+       </script>
+     <fb:login-button>Login with Facebook</fb:login-button>
      <table>
        <thead>
          <tr>
@@ -24,7 +33,7 @@
 
        <tbody id="player-list">
          <tr id="player-1" data-player="1" data-player-name="Dusty" data-score="0">
-           <td class="playerName" >Dustin</td>
+           <td class="playerName" ><img id="image" src="" /><span id="name"></span></td>
            <td class="score" >0</td>
            <td class="actions" ></td>
          </tr>

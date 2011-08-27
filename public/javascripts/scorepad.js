@@ -2,7 +2,11 @@ $(document).ready(function() {
 
 var ACTIVE_PLAYER=0;
 
-var socket = io.connect('http://nko2-sewercity.herokuapp.com/');
+if(window.location.host=="localhost:3000"){
+  var socket = io.connect('http://localhost:3000');
+}else{
+  var socket = io.connect('http://nko2-sewercity.herokuapp.com/');
+}
 
 socket.on('disconnect', function(){
   console.log("Server Connection Dropped!");
@@ -11,6 +15,15 @@ socket.on('disconnect', function(){
 socket.on('connection', function(){
   console.log("Server Connection to Socket.io");
 });
+
+         FB.api('/me', function(user) {
+           if(user != null) {
+              var image = document.getElementById('image');
+              image.src = 'https://graph.facebook.com/' + user.id + '/picture';
+              var name = document.getElementById('name');
+              name.innerHTML = user.name
+           }
+         });
 
 
 socket.on('score-push', function(data) {
