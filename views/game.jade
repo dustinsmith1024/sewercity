@@ -11,7 +11,7 @@
           Score
     tbody#player-list
       for player, player_id in game.players
-        tr#player-1(data-game-id="#{game_id}", data-player="#{player_id}", data-player-name="#{player.details.name}", data-score="0")
+        tr(id="player-#{player_id}", data-game-id="#{game_id}", data-player="#{player_id}", data-player-name="#{player.details.name}", data-score="0")
           td.playerName #{player.details.name}
           td.score 0
 

@@ -138,9 +138,10 @@ io.configure(function () {
 io.sockets.on('connection', function(socket){
   console.log("Server Connection to Socket.io");
 
-  socket.on('join game', function(game) {
+  socket.on('join game', function(game, player) {
     socket.join(game.id);
-    socket.broadcast.to(game.id).send('new member!');
+    console.log("Joined socket room: ", game.id);
+    socket.broadcast.to(game.id).emit('player add', player);
     console.log("Someon joined a game!");
   }); 
 

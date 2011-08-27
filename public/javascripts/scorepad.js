@@ -24,8 +24,9 @@ function gameId(){
 }
 socket.on('connect', function(){
   console.log("Connected to server via socketastics");
+  var data = $("#player-list tr:last").data();
   if(gameId()){
-    socket.emit('join game', {id:gameId()});
+    socket.emit('join game', {id:gameId(), player: data});
   }
 });
 
