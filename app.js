@@ -10,8 +10,15 @@ var _ = require('underscore')._;
 var facebook = require('facebook-graph');
 nko = require('nko')('dHprko2dt540/Tp2');
 
-var FB_APP_ID = '112933112052348';
-var FB_APP_SECRET = 'e1b0f67995f2f3840ebf5ef46b677083';
+if(!process.env.PORT){
+  var FB_APP_ID = '213668642020319';
+  var FB_APP_SECRET = '934dde24ecbd28336a105a9881bee8d1';
+console.log("TEST");
+}else{
+  var FB_APP_ID = '112933112052348';
+  var FB_APP_SECRET = 'e1b0f67995f2f3840ebf5ef46b677083';
+console.log("PROD!");
+}
 var GAMES = {};
 
 app.configure(function(){
@@ -39,6 +46,7 @@ app.configure('production', function(){
 app.get('/', function(req, res){
   // Check if the user is logged in to Facebook
   var user = facebook.getUserFromCookie(req.cookies, FB_APP_ID, FB_APP_SECRET);
+  console.log(user);
   if (user) {
     // If Logged in grab the graph data
     var graph = new facebook.GraphAPI(user['access_token']);

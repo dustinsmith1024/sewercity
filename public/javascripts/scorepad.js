@@ -4,7 +4,9 @@ var ACTIVE_PLAYER=0;
 
 if(window.location.host=="localhost:3000"){
   var socket = io.connect('http://localhost:3000');
+  var FB_APP_ID = '213668642020319';
 }else{
+  var FB_APP_ID = '112933112052348';
   var socket = io.connect('http://nko2-sewercity.herokuapp.com/');
 }
 
@@ -28,8 +30,11 @@ socket.on('connect', function(){
 });
 
 if($("#fb-root").length){
+//if(!process.env.PORT){
+//  var FB_APP_ID_TEST = '213668642020319';
+//  var FB_APP_SECRET_TEST = '934dde24ecbd28336a105a9881bee8d1';
   FB.init({
-    appId:'112933112052348', cookie:true,
+    appId: FB_APP_ID, cookie:true,
     status:true, xfbml:true
   });
 
