@@ -6,6 +6,8 @@ var express = require('express');
 var app = express.createServer();
 var io = require('socket.io');
 var _ = require('underscore')._;
+nko = require('nko')('dHprko2dt540/Tp2');
+
 
 app.configure(function(){
     app.use(express.methodOverride());
