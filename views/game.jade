@@ -10,9 +10,10 @@
         th
           Score
     tbody#player-list
-      tr#player-1(data-game-id="#{game_id}", data-player="1", data-player-name="#{game.owner}", data-score="0")
-        td.playerName #{game.owner}
-        td.score 0
+      for player, player_id in game.players
+        tr#player-1(data-game-id="#{game_id}", data-player="#{player_id}", data-player-name="#{player.details.name}", data-score="0")
+          td.playerName #{player.details.name}
+          td.score 0
 
   ul#game-actions Actions:
     li
