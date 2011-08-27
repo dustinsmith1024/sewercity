@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ScorePad</title>
+    <meta content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" name="viewport">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="default" name="apple-mobile-web-app-status-bar-style">
+    <link rel="StyleSheet" href="/stylesheets/scorepad.css" type="text/css" media="screen" />
+</head>
+<body>
+  <div id="header">
+    <a href="/">Homey</a>
+    <a href="/login">Login wit FBook</a>
+  </div>
+  <div id="body">
+     <h1>ScorePad</h1>
+     <p>Keep score for all your card games, board games, or drinking games!  Post your scores and track your records against all your friends!</p>
+     <table>
+       <thead>
+         <tr>
+           <th>Player</th><th>Score</th><th>Actions</th>
+         </tr>
+       </thead>
+
+       <tbody id="player-list">
+         <tr id="player-1" data-player="1" data-player-name="Dusty" data-score="0">
+           <td class="playerName" >Dustin</td>
+           <td class="score" >0</td>
+           <td class="actions" ></td>
+         </tr>
+         <tr id="player-2" data-player="2" data-player-name="Katie" data-score="0">
+           <td class="playerName" >Katie</td>
+           <td class="score" >0</td>
+           <td class="actions" ></td>
+         </tr>
+       </tbody>
+     </table>
+    <ul id="game-actions">Actions: 
+      <li><a href="#" class="add-player">+ Player</a></li>
+    </ul>
+    <ul id="player-actions">Actions:
+      <li><a href="#" data-value="1" data-function="add" >+1</a></li>
+      <li><a href="#" data-value="10" data-function="add" >+10</a></li>
+      <li><a href="#" data-value="-1" data-function="subtract" >-1</a></li>
+      <li><a href="#" data-value="-10" data-function="subtract" >-10</a></li>
+    </ul>
+    <div id="status">
+      <p>TIMER</p>
+      <p>Other things that probably wont get implemented....</p>
+    </div>
+  </div>
+  <div id="footer">
+    <ul>
+      <li><a href="/">Homer</a></li>
+      <li><a href="/">VOTE FOR ME!</a></li>
+    </ul>
+  </div>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js" ></script>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.1.6/underscore-min.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/javascripts/scorepad.js"></script>
+</body>
+</html>
