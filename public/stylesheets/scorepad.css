@@ -10,13 +10,13 @@ a {
 
 #player-list td, th {
     font-size: 21px;
-    padding: 5px;
+    padding: 10px;
     text-align: center;
 }
 /* layout */
 
 footer#actions {
-  margin-top: 20px;
+  margin-top: 35px;
 }
 footer#actions div#wrapper {
   text-align: center;

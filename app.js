@@ -130,6 +130,21 @@ app.get('/', function(req, res){
 });
 
 
+app.get('/post/', function(req, res){
+  var user = facebook.getUserFromCookie(req.cookies, FB_APP_ID, FB_APP_SECRET);
+  if (user) {
+    var graph = new facebook.GraphAPI(user['access_token']);
+    function print(error, data) {
+        console.log(error || data);
+    }
+    //graph.getObject('me', print);
+    //graph.getConnections('me', 'friends', print);
+    graph.putObject('me', 'feed', {message: 'The computerz iz writing on my wallz!1'}, print);
+    res.redirect('/');
+  }
+});
+
+
 app.get('/game/:action', function(req, res){
   // Check if the user is logged in to Facebook 
   //console.log("COOKIES: ", req.cookies);

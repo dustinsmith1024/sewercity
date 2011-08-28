@@ -39,6 +39,13 @@ if($("#fb-root").length){
     status:true, xfbml:true
   });
 
+FB.Event.subscribe('auth.sessionChange', function(response) {
+  if(response.status=='connected'){
+    window.location = "/";
+  }
+  console.log('The status of the session is: ' + response.status);
+});
+
   FB.api('/me', function(user) {
     if(user != null) {
       // var image = document.getElementById('image');
@@ -55,10 +62,11 @@ socket.on('score-push', function(data) {
       var $p = $("#player-list").find("tr.current");
       if($p.data("player")==data.winner){
         alert("Congrats " + $p.data("playerName") + " you are the Champ!");
+        window.location = "/post/";
       }else{
         alert("Sorry, " + data.winner_name + " is the Champ. Better luck next time.");
+        window.location = "/";
       }
-      window.location = "/";
     }
     var diff = Number(data.score) - Number($p.find(".score").text());
     if(diff > 0){
@@ -130,10 +138,11 @@ $("#player-edit-actions > li > a").live("click", function(event) {
     socket.emit("update score", $p.data() );
     if($p.hasClass("current")){
       alert("Congrats " + $p.data("playerName") + " you are the Champ!");
+      window.location = "/post/";
     }else{
       alert("Sorry, " + $p.data("playerName") + " is the Champ. Better luck next time.");
+      window.location = "/";
     }
-    window.location = "/";
   }else{
     console.log("NO PLAYER SELECTED!");
   }
