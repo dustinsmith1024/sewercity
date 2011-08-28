@@ -68,13 +68,14 @@ socket.on('score-push', function(data) {
         window.location = "/";
       }
     }
+    $p = $("tr#player-" + data.player);
     var diff = Number(data.score) - Number($p.find(".score").text());
     if(diff > 0){
       $p.find(".action").text("+" + diff).fadeIn("fast").fadeOut("slow");
     }else{
       $p.find(".action").text(diff).fadeIn("fast").fadeOut("slow");
     }
-    $p = $("tr#player-" + data.player);
+    //$p = $("tr#player-" + data.player);
     $p.find(".score").text(data.score);
     $p.data("score", data.score);
 });
