@@ -52,7 +52,7 @@ if($("#fb-root").length){
 socket.on('score-push', function(data) {
     console.log('Received: ', data);
     if(data.winner){
-      alert("Sorry, " + data("winner_name") + " is the Champ. Better luck next time.");
+      alert("Sorry, " + data.winner_name + " is the Champ. Better luck next time.");
     }
     $p = $("tr#player-" + data.player);
     $p.find(".score").text(data.score);
