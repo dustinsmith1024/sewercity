@@ -75,7 +75,6 @@ socket.on('score-push', function(data) {
     }else{
       $p.find(".action").text(diff).fadeIn("fast").fadeOut("slow");
     }
-    //$p = $("tr#player-" + data.player);
     $p.find(".score").text(data.score);
     $p.data("score", data.score);
 });
