@@ -2,37 +2,91 @@
 html, body, #body {
  /* font-family: Arial, Arial, Helvetica, sans-serif;
  */
+  text-align: center;
 }
 a {
   text-decoration: none;
 }
-/* layout */
 
+#player-list td, th {
+    font-size: 18px;
+    padding: 5px;
+    text-align: center;
+}
+/* layout */
+footer#actions {
+  position: fixed;
+  bottom: 1px;
+}
+footer ul {
+  display: inline;
+}
 #body {
+  margin-left: 5px;
+  margin-right: 5px;
 }
-a {
-}
-nav#footer{
+a.button {
+  margin-bottom: 0;
+  padding: 4px 12px;
+
 }
 td, th {
   text-align: center;
 }
 ul {
+  margin-bottom: 0;
+}
+ul#game-list {
+
 }
 table{
   margin-bottom: 5px;
 }
 li {
-}
-
-li {
   display: inline;
 }
 
-/* color */
+/* Smaller than standard 960 (devices and browsers) */
+@media only screen and (max-width: 959px) {}
 
+/* Tablet Portrait size to standard 960 (devices and browsers) */
+@media only screen and (min-width: 768px) and (max-width: 959px) {}
+
+/* All Mobile Sizes (devices and browser) */
+@media only screen and (max-width: 767px) {}
+
+/* Mobile Landscape Size to Tablet Portrait (devices and browsers) */
+@media only screen and (min-width: 480px) and (max-width: 767px) {
+
+}
+/* Mobile Landscape Size to Tablet Portrait (devices and browsers) */
+@media only screen and (min-width: 480px)  {
+  iframe#vote-button {
+    position: fixed;
+    right: 1px;
+    top: 10px;
+  }
+}
+
+/* Mobile Portrait Size to Mobile Landscape Size (devices and browsers) */
+@media only screen and (max-width: 479px) {}
+
+
+
+/* color */
+html,body{
+  background-color: #333;
+  color: #FFF;
+}
 h1, h2, h3 {
   color: #FFF;
+}
+h1 a, h1 a:visited, h1 a:hover {
+  color: #FFA33F;
+}
+h1 a:hover {
+  cursor: pointer;
+  text-decoration: underline;
 }
 a, a:visited, a:active {
 }
@@ -47,3 +101,78 @@ tr.active {
 .hidden{
   display: none;
 }
+/* SKELETON BUTTONS */
+
+
+        a.button,
+        button,
+        input[type="submit"],
+        input[type="reset"],
+        input[type="button"] {
+                background: #eee; /* Old browsers */
+                background: -moz-linear-gradient(top, rgba(255,255,255,.2) 0%, rgba(0,0,0,.2) 100%); /* FF3.6+ */
+                background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,.2)), color-stop(100%,rgba(0,0,0,.2))); /* Chrome,Safari4+ */
+                background: -webkit-linear-gradient(top, rgba(255,255,255,.2) 0%,rgba(0,0,0,.2) 100%); /* Chrome10+,Safari5.1+ */
+                background: -o-linear-gradient(top, rgba(255,255,255,.2) 0%,rgba(0,0,0,.2) 100%); /* Opera11.10+ */
+                background: -ms-linear-gradient(top, rgba(255,255,255,.2) 0%,rgba(0,0,0,.2) 100%); /* IE10+ */
+                background: linear-gradient(top, rgba(255,255,255,.2) 0%,rgba(0,0,0,.2) 100%); /* W3C */
+          border: 1px solid #aaa;
+          border-top: 1px solid #888;
+          border-left: 1px solid #888;
+          padding: 4px 12px;
+          -moz-border-radius: 3px;
+          -webkit-border-radius: 3px;
+          border-radius: 3px;
+          color: #aaa;
+          display: inline-block;
+          font-size: 14px;
+          font-weight: normal;
+          text-decoration: none;
+          text-shadow: 0 0px rgba(255, 255, 255, .10);
+          cursor: pointer;
+          margin-bottom: 20px;
+          margin-left: 2px;
+          line-height: 21px;
+          font-family: "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif; }
+
+        a.button:hover,
+        button:hover,
+        input[type="submit"]:hover,
+        input[type="reset"]:hover,
+        input[type="button"]:hover {
+                color: #FFA33F;
+                background: #ddd; /* Old browsers */
+                background: -moz-linear-gradient(top, rgba(255,255,255,.3) 0%, rgba(0,0,0,.3) 100%); /* FF3.6+ */
+                background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,.3)), color-stop(100%,rgba(0,0,0,.3))); /* Chrome,Safari4+ */
+                background: -webkit-linear-gradient(top, rgba(255,255,255,.3) 0%,rgba(0,0,0,.3) 100%); /* Chrome10+,Safari5.1+ */
+                background: -o-linear-gradient(top, rgba(255,255,255,.3) 0%,rgba(0,0,0,.3) 100%); /* Opera11.10+ */
+                background: -ms-linear-gradient(top, rgba(255,255,255,.3) 0%,rgba(0,0,0,.3) 100%); /* IE10+ */
+                background: linear-gradient(top, rgba(255,255,255,.3) 0%,rgba(0,0,0,.3) 100%); /* W3C */
+          border: 1px solid #888;
+          border-top: 1px solid #aaa;
+          border-left: 1px solid #aaa; }
+
+  a.button:active,
+  button:active,
+        input[type="submit"]:active,
+        input[type="reset"]:active,
+        input[type="button"]:active {
+                border: 1px solid #666;
+                background: #ccc; /* Old browsers */
+                background: -moz-linear-gradient(top, rgba(255,255,255,.35) 0%, rgba(10,10,10,.4) 100%); /* FF3.6+ */
+                background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,.35)), color-stop(100%,rgba(10,10,10,.4))); /* Chrome,Safari4+ */
+                background: -webkit-linear-gradient(top, rgba(255,255,255,.35) 0%,rgba(10,10,10,.4) 100%); /* Chrome10+,Safari5.1+ */
+                background: -o-linear-gradient(top, rgba(255,255,255,.35) 0%,rgba(10,10,10,.4) 100%); /* Opera11.10+ */
+                background: -ms-linear-gradient(top, rgba(255,255,255,.35) 0%,rgba(10,10,10,.4) 100%); /* IE10+ */
+                background: linear-gradient(top, rgba(255,255,255,.35) 0%,rgba(10,10,10,.4) 100%); /* W3C */ }
+
+        .button.full-width,
+        button.full-width,
+        input[type="submit"].full-width,
+        input[type="reset"].full-width,
+        input[type="button"].full-width {
+                width: 100%;
+                padding-left: 0 !important;
+                padding-right: 0 !important;
+                text-align: center; }
+

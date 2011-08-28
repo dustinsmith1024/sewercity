@@ -60,6 +60,12 @@ socket.on('score-push', function(data) {
       }
       window.location = "/";
     }
+    var diff = Number(data.score) - Number($p.find(".score").text());
+    if(diff > 0){
+      $p.find(".action").text("+" + diff).fadeIn("fast").fadeOut("slow");
+    }else{
+      $p.find(".action").text(diff).fadeIn("fast").fadeOut("slow");
+    }
     $p = $("tr#player-" + data.player);
     $p.find(".score").text(data.score);
     $p.data("score", data.score);
@@ -84,6 +90,11 @@ $("#player-actions > li > a").live("click", function(event) {
     console.log($p.data());
     var score = Number($p.data("score")) + Number(data.value);
     $p.data("score", score);
+    if(data.value > 0){
+      $p.find(".action").text("+" + data.value).fadeIn("fast").fadeOut("slow");
+    }else{
+      $p.find(".action").text(data.value).fadeIn("fast").fadeOut("slow");
+    }
     $p.find(".score").text(score);
     socket.emit("update score", $p.data() );
   }else{
@@ -132,12 +143,14 @@ $("#player-list tr").live("click", function(event) {
     data = $(this).data();
     ACTIVE_PLAYER = data.player;
     console.log("clicked: ", data.player);
+    $(this).find("input").attr("checked","checked");
     $("#player-list > .active").removeClass("active");
     $(this).toggleClass("active");
-    $("#player-actions, #player-edit-actions").toggle("fast");
+    //$("#player-actions, #player-edit-actions").toggle("fast");
   }else{
     $(this).removeClass("active");
-    $("#player-actions, #player-edit-actions").toggle("fast");
+    $(this).find("input").removeAttr("checked");
+    //$("#player-actions, #player-edit-actions").toggle("fast");
     ACTIVE_PLAYER=0;
   }
 });

@@ -1,12 +1,12 @@
 h2 Join a Game
 
 - if (games)
-  ul Available Games:
+  ul#game-list 
     for game, game_id in games
       li
-        a(href='/game/' + game_id)
-          img(src='https://graph.facebook.com/' + game_id + '/picture')
-          #{game.owner} - #{game_id} - CHANGE TO TIME STARTED
+        img(src='https://graph.facebook.com/' + game_id + '/picture')
+        a(class="button", href='/game/' + game_id)
+          #{game.owner} 
 - else
   p 
   | No Games Found! <a href="/game/start">Start One?</a>

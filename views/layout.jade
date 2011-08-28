@@ -25,14 +25,10 @@ html
 
       h1: a(href="/") ScorePad
 
+      | <iframe id="vote-button" src="http://nodeknockout.com/iframe/sewercity" frameborder=0 scrolling=no allowtransparency=true width=115 height=25>
+      | </iframe>
       section#body!= body
 
-      nav#footer
-        ul
-          li: a(class="full-width button", href="/", title="Sup Homie?!") Home
-      
-        | <iframe src="http://nodeknockout.com/iframe/sewercity" frameborder=0 scrolling=no allowtransparency=true width=115 height=25>
-        | </iframe> 
 
     section#js-loads
       script(type='text/javascript', src='http://connect.facebook.net/en_US/all.js')

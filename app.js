@@ -83,37 +83,43 @@ app.get('/', function(req, res){
     // If Logged in grab the graph data
     var graph = new facebook.GraphAPI(f_user['access_token']);
     graph.getObject('me', function(error, f_user){
-      //Check the DB for a user
-      console.log("user: ", f_user);
-      console.log("GAMES COUNT:", Object.keys(GAMES).length);
-      var games = false;
-      var user_has_game = false;
-      if(Object.keys(GAMES).length > 0){
-        games = true;
-      }
-      if(GAMES[f_user.id]){
-        var user_has_game = true;
-      }
-      UserModel.findOne({ facebook_id: f_user.id}, function (err, db_user){
-        if(db_user){
-          //GO AHEAD
-          console.log(db_user);
-          f_user.wins = db_user.wins;
-          f_user.losses = db_user.losses;
-          res.render('welcome', {title: 'Welcome', user: f_user, games: games, user_has_game: user_has_game});
-        }else{
-          //Create the user
-          var user = new UserModel();
-          user.facebook_id = f_user.id;
-          user.wins, f_user = 0;
-          user.losses, f_user = 0;
-          user.save(function(err) {
-            console.log(err);
-            //Load the logged in home page
-            res.render('welcome', {title: 'Welcome', user: f_user, games: games, user_has_game: user_has_game});
-          });
+      if(error){
+        console.log("Something happend grabbing Facebook graph!");
+        res.clearCookie();
+        res.redirect('/');
+      }else{
+        //Check the DB for a user
+        console.log("user: ", f_user);
+        console.log("GAMES COUNT:", Object.keys(GAMES).length);
+        var games = false;
+        var user_has_game = false;
+        if(Object.keys(GAMES).length > 0){
+          games = true;
         }
-      });
+        if(GAMES[f_user.id]){
+          var user_has_game = true;
+        }
+        UserModel.findOne({ facebook_id: f_user.id}, function (err, db_user){
+          if(db_user){
+            //GO AHEAD
+            console.log(db_user);
+            f_user.wins = db_user.wins;
+            f_user.losses = db_user.losses;
+            res.render('welcome', {title: 'Welcome', user: f_user, games: games, user_has_game: user_has_game});
+          }else{
+            //Create the user
+            var user = new UserModel();
+            user.facebook_id = f_user.id;
+            user.wins, f_user = 0;
+            user.losses, f_user = 0;
+            user.save(function(err) {
+              console.log(err);
+              //Load the logged in home page
+              res.render('welcome', {title: 'Welcome', user: f_user, games: games, user_has_game: user_has_game});
+            });
+          }
+        });
+      }
     });
   } else {
     res.render('index', { title: 'Log-in' });
@@ -125,57 +131,64 @@ app.get('/game/:action', function(req, res){
   // Check if the user is logged in to Facebook 
   //console.log("COOKIES: ", req.cookies);
   //console.log("SESSION: ", req.session);
+  console.log("GAME/", req.params.action);
   var slug = req.params.slug;
   var action = req.params.action;
   var user = facebook.getUserFromCookie(req.cookies, FB_APP_ID, FB_APP_SECRET);
+  console.log(user);
   if (user) {
     // If Logged in grab the graph data
     var graph = new facebook.GraphAPI(user['access_token']);
     graph.getObject('me', function(error, user){
-      console.log("USER: ", user); 
-      if (action=="start"){
-        //Starts a new game - also can clear a users game already in progress
-        //Users only allowed one game at a time
-        GAMES[user.id] = {owner: user.name, players: {} };
-        console.log("Current GAME: ", GAMES[user.id]);
-        user.score = 0;
-        GAMES[user.id].players[user.id] = {details: user };
-        console.log("ALL GAMES: ", GAMES);
-        res.redirect('/game/' + user.id);
-      }else if(action=="join"){
-        //Need to find current games then parse it for friends
-        //Display a list of friends playing then they can select to join
-        console.log("Parse Current Games for Friend ID's!", GAMES);        
-        _.each(GAMES, function(key, game){
-          console.log("KEY: ", key);
-          console.log(game);
-        });
-        res.render('join', {title: 'Join a Game', games: GAMES});
+      if(error || !user || !user.id){
+        console.log("Error with Facebook Cookie", error);
+        res.redirect('/');
       }else{
-        console.log("LOGGED IN AND SOMETHING ELSE!");
-        console.log(GAMES[req.params.action]);
-        //ADD PLAYER TO GAME OBJECT
-        var game_id = req.params.action;
-        console.log("GAME_ID: ", game_id);
-        if(GAMES[game_id]){
-          //GAMES[game_id]["current_user_id"] == user.id;
-          //GAMES[game_id]["current_user_name"] == user.name;
-          if(GAMES[game_id].players[user.id]){
-           // _.extend(GAMES[game_id].players[user.id], {current_user: true});
-          }else{
-            console.log("setting up game for newcommer");
-            user.score = 0;
-            GAMES[game_id].players[user.id] = {details: user };
-          }
-        }else{
+       console.log("USER: ", user); 
+        if (action=="start"){
+          //Starts a new game - also can clear a users game already in progress
+          //Users only allowed one game at a time
           GAMES[user.id] = {owner: user.name, players: {} };
           console.log("Current GAME: ", GAMES[user.id]);
+          user.score = 0;
           GAMES[user.id].players[user.id] = {details: user };
+          console.log("ALL GAMES: ", GAMES);
+          res.redirect('/game/' + user.id);
+        }else if(action=="join"){
+          //Need to find current games then parse it for friends
+          //Display a list of friends playing then they can select to join
+          console.log("Parse Current Games for Friend ID's!", GAMES);        
+          _.each(GAMES, function(key, game){
+            console.log("KEY: ", key);
+            console.log(game);
+          });
+          res.render('join', {title: 'Join a Game', games: GAMES});
+        }else{
+          console.log("LOGGED IN AND SOMETHING ELSE!");
+          console.log(GAMES[req.params.action]);
+          //ADD PLAYER TO GAME OBJECT
+          var game_id = req.params.action;
+          console.log("GAME_ID: ", game_id);
+          if(GAMES[game_id]){
+            //GAMES[game_id]["current_user_id"] == user.id;
+            //GAMES[game_id]["current_user_name"] == user.name;
+            if(GAMES[game_id].players[user.id]){
+             // _.extend(GAMES[game_id].players[user.id], {current_user: true});
+            }else{
+              console.log("setting up game for newcommer");
+              user.score = 0;
+              GAMES[game_id].players[user.id] = {details: user };
+            }
+          }else{
+            GAMES[user.id] = {owner: user.name, players: {} };
+            console.log("Current GAME: ", GAMES[user.id]);
+            GAMES[user.id].players[user.id] = {details: user };
+          }
+          _.each(GAMES, function(game){
+            console.log(game);
+          });
+          res.render('game', {title: 'Game ' + req.params.action, current_user_id: user.id, current_user_name: user.name, game_id: game_id, game: GAMES[game_id]});
         }
-        _.each(GAMES, function(game){
-          console.log(game);
-        });
-        res.render('game', {title: 'Game ' + req.params.action, current_user_id: user.id, current_user_name: user.name, game_id: game_id, game: GAMES[game_id]});
       }
     });
   } else {

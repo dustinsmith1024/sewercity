@@ -2,16 +2,16 @@ h2 What up #{user.first_name}?
 
 p You can host 1 game and join as many as you would like. You can close your hosted game and come back later if you need to.
 
-ul#record Record
-  li Wins: #{user.wins}
+ul#record 
+  li Wins: #{user.wins} 
   li Losses: #{user.losses}
 
 
 ul#game-actions
   - if (user_has_game)
-    li: a(class="full-width button", href="/game/#{user.id}") Rejoin Game?
-    li: a(class="full-width button", href="/game/start") Reset Game?
+    li: a(class="button", href="/game/#{user.id}") Rejoin Game?
+    li: a(class="button", href="/game/start") Reset Game?
   - else
-    li: a(class="full-width button", href="/game/start") Start a Game?
+    li: a(class="button", href="/game/start") Start a Game?
   - if (games)
-    li: a(class="full-width button", href="/game/join") Join A Game?
+    li: a(class="button", href="/game/join") Join A Game?
