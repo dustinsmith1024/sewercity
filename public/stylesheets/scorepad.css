@@ -16,8 +16,7 @@ a {
 /* layout */
 
 footer#actions {
-  position: fixed;
-  bottom: 1px;
+  margin-top: 20px;
 }
 footer#actions div#wrapper {
   text-align: center;
