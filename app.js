@@ -75,6 +75,7 @@ app.configure('production', function(){
 
 app.get('/', function(req, res){
   // Check if the user is logged in to Facebook
+  console.log("APP GET /");
   console.log("COOKIES: ", req.cookies);
   console.log("SESSION: ", req.session);
   var f_user = facebook.getUserFromCookie(req.cookies, FB_APP_ID, FB_APP_SECRET);
@@ -110,8 +111,10 @@ app.get('/', function(req, res){
             //Create the user
             var user = new UserModel();
             user.facebook_id = f_user.id;
-            user.wins, f_user = 0;
-            user.losses, f_user = 0;
+            user.wins = 0;
+            f_user.wins = 0; //THIS WAS NOT .WINS FOR SOME REASON???
+            user.losses = 0;
+            f_user.losses = 0;
             user.save(function(err) {
               console.log(err);
               //Load the logged in home page
@@ -131,7 +134,7 @@ app.get('/game/:action', function(req, res){
   // Check if the user is logged in to Facebook 
   //console.log("COOKIES: ", req.cookies);
   //console.log("SESSION: ", req.session);
-  console.log("GAME/", req.params.action);
+  console.log("REQUESTED /GAME/", req.params.action);
   var slug = req.params.slug;
   var action = req.params.action;
   var user = facebook.getUserFromCookie(req.cookies, FB_APP_ID, FB_APP_SECRET);
@@ -249,7 +252,8 @@ io.sockets.on('connection', function(socket){
   });
 
   socket.on('update score', function(score) {
-    console.log('Score ' + score);
+    console.log("Socket Request -> Updated Score");
+    console.log('Score: ', score);
     GAMES[score.gameId].players[score.player].details.score = score.score;
     socket.broadcast.to(score.gameId).emit('score-push', score);
     if(score.winner){
@@ -270,7 +274,7 @@ io.sockets.on('connection', function(socket){
               if(err){
                 console.log(err);
               }else{
-                console.log("Player updated!", user);
+                console.log("Winner updated!", user);
               }
             });
             delete GAMES[score.gameId];

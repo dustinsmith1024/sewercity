@@ -27,27 +27,28 @@
             td.action 
 
   footer#actions
-    ul#player-edit-actions.hidden
-      li
-        a(class="button", href="#winner") Confim Winner?
+    div#wrapper
+      ul#player-edit-actions.hidden
+        li
+          a(class="button", href="#winner") Confim Winner?
 
 
-    ul#player-actions
-      li
-        a(class="button", href="#", data-value="-1")
-          |-1
-      li
-        a(class="button", href="#", data-value="-10")
-          |-10
-      li
-        a(class="button", href="#", data-value="+1")
-          |+1
-      li
-        a(class="button", href="#", data-value="+10")
-          |+10
-      li
-        a(class="button", href="#", data-value="options")
-          |...
+      ul#player-actions
+        li
+          a(class="button", href="#", data-value="-1")
+            |-1
+        li
+          a(class="button", href="#", data-value="-10")
+            |-10
+        li
+          a(class="button", href="#", data-value="+1")
+            |+1
+        li
+          a(class="button", href="#", data-value="+10")
+            |+10
+        li
+          a(class="button", href="#", data-value="options")
+            |...
 
 - else
   p Looks like something happend and this is not a valid game ID - SORRY!

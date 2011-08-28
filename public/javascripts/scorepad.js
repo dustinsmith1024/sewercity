@@ -77,7 +77,7 @@ socket.on('player add', function(data) {
   if($("#player-" + data.player).length){
     console.log("already added!");
   }else{
-    $("#player-list").append('<tr id="player-' + data.player + '" data-game-id=" '+ data.gameId + '" data-player="' + data.player + '" data-player-name="' + data.playerName + '" data-score="0" ><td class="playerName">' + data.playerName + '</td><td class="score">' + data.score + '</td><td></td></tr>');
+    $("#player-list").append('<tr id="player-' + data.player + '" data-game-id=" '+ data.gameId + '" data-player="' + data.player + '" data-player-name="' + data.playerName + '" data-score="0" ><td class="selector"><input type="checkbox" /></td><td class="playerName">' + data.playerName + '</td><td class="score">' + data.score + '</td><td></td></tr>');
   }
 });
 
@@ -153,6 +153,7 @@ $("#player-list tr").live("click", function(event) {
     data = $(this).data();
     ACTIVE_PLAYER = data.player;
     console.log("clicked: ", data.player);
+    $(this).find("input").removeAttr("checked");
     $(this).find("input").attr("checked","checked");
     $("#player-list > .active").removeClass("active");
     $(this).toggleClass("active");

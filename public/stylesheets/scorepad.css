@@ -14,11 +14,14 @@ a {
     text-align: center;
 }
 /* layout */
+
 footer#actions {
   position: fixed;
   bottom: 1px;
+  width: 100%;
 }
-footer ul {
+footer#actions div#wrapper {
+  text-align: center;
 }
 #body {
   margin-left: 5px;
@@ -34,6 +37,9 @@ td, th {
 }
 ul {
   margin-bottom: 0;
+}
+ul#game-actions {
+  margin-top: 10px;
 }
 ul#game-list li img {
   margin: 5px 10px 5px 5px;
@@ -131,7 +137,7 @@ td, th {
           border-radius: 3px;
           color: #FFA33F;
           display: inline-block;
-          font-size: 14px;
+          font-size: 18px;
           font-weight: normal;
           text-decoration: none;
           text-shadow: 0 0px rgba(255, 255, 255, .10);
