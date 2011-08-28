@@ -1,6 +1,5 @@
 $(document).ready(function() {
 //alert("supp?");
-window.scrollTo(0, 1);
 var ACTIVE_PLAYER=0;
 
 if(window.location.host=="localhost:3000"){
