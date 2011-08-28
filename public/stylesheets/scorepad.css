@@ -22,7 +22,9 @@ footer#actions div#wrapper {
   text-align: center;
 }
 table{
-  width: 320px;
+}
+td.action {
+  width: 50px;
 }
 tr {
   border-bottom: 1px dotted black;

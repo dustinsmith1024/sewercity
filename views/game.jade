@@ -18,13 +18,13 @@
             td.selector: input(type='checkbox')
             td.playerName #{player.details.name}
             td.score #{player.details.score}
-            td.action 
+            td.action: span  
         - else
           tr(id="player-#{player_id}", data-game-id="#{game_id}", data-player="#{player_id}", data-player-name="#{player.details.name}", data-score="#{player.details.score}")
             td.selector: input(type='checkbox')
             td.playerName #{player.details.name}
             td.score #{player.details.score}
-            td.action 
+            td.action: span 
 
   footer#actions
     div#wrapper

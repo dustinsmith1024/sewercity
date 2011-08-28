@@ -95,9 +95,11 @@ $("#player-actions > li > a").live("click", function(event) {
       var score = Number($p.data("score")) + Number(data.value);
       $p.data("score", score);
       if(data.value > 0){
-        $p.find(".action").text("+" + data.value).fadeIn("fast").fadeOut("slow");
+        console.log(data.value);
+        $p.find(".action span").text("+" + data.value).fadeIn("fast").fadeOut("slow");
       }else{
-        $p.find(".action").text(data.value).fadeIn("fast").fadeOut("slow");
+        console.log(data.value);
+        $p.find(".action span").text(data.value).fadeIn("fast").fadeOut("slow");
       }
       $p.find(".score").text(score);
       socket.emit("update score", $p.data() );
