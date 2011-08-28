@@ -58,6 +58,9 @@ table{
 li {
   display: inline;
 }
+#game-list li {
+  display: block;
+}
 
 /* Smaller than standard 960 (devices and browsers) */
 @media only screen and (max-width: 959px) {}
