@@ -163,7 +163,7 @@ app.get('/game/:action', function(req, res){
           }else{
             console.log("setting up game for newcommer");
             user.score = 0;
-            GAMES[user.id].players[user.id] = {details: user, current: true };
+            GAMES[game_id].players[user.id] = {details: user, current: true };
           }
         }else{
           GAMES[user.id] = {owner: user.name, players: {} };
