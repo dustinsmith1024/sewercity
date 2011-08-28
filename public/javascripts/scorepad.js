@@ -52,7 +52,12 @@ if($("#fb-root").length){
 socket.on('score-push', function(data) {
     console.log('Received: ', data);
     if(data.winner){
-      alert("Sorry, " + data.winner_name + " is the Champ. Better luck next time.");
+      var $p = $("#player-list").find("tr.current");
+      if($p.data("player")==data.winner){
+        alert("Congrats " + $p.data("playerName") + " you are the Champ!");
+      }else{
+        alert("Sorry, " + data.winner_name + " is the Champ. Better luck next time.");
+      }
     }
     $p = $("tr#player-" + data.player);
     $p.find(".score").text(data.score);
@@ -94,7 +99,11 @@ $("#player-edit-actions > li > a").live("click", function(event) {
       $p.data("winner_name", $p.data("playerName"));
     }
     socket.emit("update score", $p.data() );
-    alert("Congrats " + $p.data("playerName") + " you are the Champ!");
+    if($p.hasClass("current")){
+      alert("Congrats " + $p.data("playerName") + " you are the Champ!");
+    }else{
+      alert("Sorry, " + $p.data("playerName") + " is the Champ. Better luck next time.");
+    }
   }else{
     console.log("NO PLAYER SELECTED!");
   }
