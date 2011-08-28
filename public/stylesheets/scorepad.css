@@ -21,6 +21,9 @@ footer#actions {
 footer#actions div#wrapper {
   text-align: center;
 }
+body {
+  width: 300px;
+}
 #body {
   margin-left: 5px;
   margin-right: 5px;
