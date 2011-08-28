@@ -139,7 +139,7 @@ app.get('/post/', function(req, res){
     }
     //graph.getObject('me', print);
     //graph.getConnections('me', 'friends', print);
-    graph.putObject('me', 'feed', {message: 'The computerz iz writing on my wallz!1'}, print);
+    graph.putObject('me', 'feed', {message: 'I just dominated my opponents! Check out the http://nko2-sewercity.herokuapp.com ScorePad app so you can track your wins and losses.'}, print);
     res.redirect('/');
   }
 });
