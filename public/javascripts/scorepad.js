@@ -66,7 +66,12 @@ socket.on('score-push', function(data) {
 
 socket.on('player add', function(data) {
   console.log('Recieved: ',  data.gameId);
-  $("#player-list").append('<tr id="player-' + data.player + '" data-game-id=" '+ data.gameId + '" data-player="' + data.player + '" data-player-name="' + data.playerName + '" data-score="0" ><td class="playerName">' + data.playerName + '</td><td class="score">' + data.score + '</td><td></td></tr>');
+  //check if user is already in
+  if($("#player-" + data.player).length){
+    console.log("already added!");
+  }else{
+    $("#player-list").append('<tr id="player-' + data.player + '" data-game-id=" '+ data.gameId + '" data-player="' + data.player + '" data-player-name="' + data.playerName + '" data-score="0" ><td class="playerName">' + data.playerName + '</td><td class="score">' + data.score + '</td><td></td></tr>');
+  }
 });
 
 $("#player-actions > li > a").live("click", function(event) {
@@ -117,18 +122,6 @@ $("a.update-score").click(function(event){
   console.log("Sending: ", data);
   $p.find(".score").text(data.score);
   socket.emit("update score", data );
-});
-
-$("a.add-player").click(function(event){
-  event.preventDefault();
-  var name = prompt("Player Namer:", "");
-  $pl = $("#player-list");
-  var players = $pl.children().length + 1;
-  $pl.append('<tr id="player-' + players + '" data-game-id=" '+ gameId() + '" data-player="' + players + '" data-player-name="' + name + '" data-score="0" ><td class="playerName" >' + name + '</td><td class="score">0</td><td></td></tr>');
-  var data = $pl.find("tr:last").data();
-  console.log("Added player: ", data);
-  socket.emit("add player", data);
-
 });
 
 $("#player-list tr").live("click", function(event) {

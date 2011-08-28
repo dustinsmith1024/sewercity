@@ -1,6 +1,8 @@
 
 - if (game)
   input(type='hidden', name='game_id', id="game-id", value="#{game_id}")
+  input(type='hidden', name='current_user_id', id='current-user-id', value="#{current_user_id}")
+  input(type='hidden', name='current_user_name', id='current-user-name', value="#{current_user_name}")
   div#fb-root
   table
     thead
@@ -11,7 +13,7 @@
           Score
     tbody#player-list
       for player, player_id in game.players
-        - if (player.current)
+        - if (player_id==current_user_id)
           tr(id="player-#{player_id}", class="current", data-game-id="#{game_id}", data-player="#{player_id}", data-player-name="#{player.details.name}", data-score="#{player.details.score}")
             td.playerName #{player.details.name}
             td.score #{player.details.score}

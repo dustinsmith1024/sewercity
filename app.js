@@ -156,24 +156,24 @@ app.get('/game/:action', function(req, res){
         var game_id = req.params.action;
         console.log("GAME_ID: ", game_id);
         if(GAMES[game_id]){
+          //GAMES[game_id]["current_user_id"] == user.id;
+          //GAMES[game_id]["current_user_name"] == user.name;
           if(GAMES[game_id].players[user.id]){
-            console.log(GAMES[game_id].players[user.id].details);
-            _.extend(GAMES[game_id].players[user.id], {current: true});
-            console.log(GAMES[game_id].players[user.id].details);
+           // _.extend(GAMES[game_id].players[user.id], {current_user: true});
           }else{
             console.log("setting up game for newcommer");
             user.score = 0;
-            GAMES[game_id].players[user.id] = {details: user, current: true };
+            GAMES[game_id].players[user.id] = {details: user };
           }
         }else{
           GAMES[user.id] = {owner: user.name, players: {} };
           console.log("Current GAME: ", GAMES[user.id]);
           GAMES[user.id].players[user.id] = {details: user };
         }
-          _.each(GAMES, function(game){
-            console.log(game);
-          });
-          res.render('game', {title: 'Game ' + req.params.action, current_user: user.id, game_id: game_id, game: GAMES[game_id]});
+        _.each(GAMES, function(game){
+          console.log(game);
+        });
+        res.render('game', {title: 'Game ' + req.params.action, current_user_id: user.id, current_user_name: user.name, game_id: game_id, game: GAMES[game_id]});
       }
     });
   } else {
