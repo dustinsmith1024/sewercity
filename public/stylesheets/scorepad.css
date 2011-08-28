@@ -19,7 +19,6 @@ footer#actions {
   bottom: 1px;
 }
 footer ul {
-  display: inline;
 }
 #body {
   margin-left: 5px;
@@ -36,8 +35,10 @@ td, th {
 ul {
   margin-bottom: 0;
 }
-ul#game-list {
-
+ul#game-list li img {
+  margin: 5px 10px 5px 5px;
+  vertical-align: middle;
+  box-shadow: 2px 2px 4px black;
 }
 table{
   margin-bottom: 5px;
@@ -95,8 +96,14 @@ a, a:visited, a:active {
 #player-list tr {
   cursor: pointer;
 }
-tr.active {
+h1, h2, h3 {
+  text-shadow: 2px 2px 2px black;
+}
+tr.active, tr.highlight {
   color: #FFA33F;
+}
+td, th {
+  -moz-transition: all 0.2s ease-in-out 0s;
 }
 .hidden{
   display: none;
@@ -116,14 +123,13 @@ tr.active {
                 background: -o-linear-gradient(top, rgba(255,255,255,.2) 0%,rgba(0,0,0,.2) 100%); /* Opera11.10+ */
                 background: -ms-linear-gradient(top, rgba(255,255,255,.2) 0%,rgba(0,0,0,.2) 100%); /* IE10+ */
                 background: linear-gradient(top, rgba(255,255,255,.2) 0%,rgba(0,0,0,.2) 100%); /* W3C */
-          border: 1px solid #aaa;
-          border-top: 1px solid #888;
-          border-left: 1px solid #888;
+          border: 1px solid #888;
+          border-color: #AAAAAA #888888 #888888 #AAAAAA;
           padding: 4px 12px;
           -moz-border-radius: 3px;
           -webkit-border-radius: 3px;
           border-radius: 3px;
-          color: #aaa;
+          color: #FFA33F;
           display: inline-block;
           font-size: 14px;
           font-weight: normal;

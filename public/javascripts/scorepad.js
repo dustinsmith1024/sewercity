@@ -86,18 +86,28 @@ $("#player-actions > li > a").live("click", function(event) {
   if(ACTIVE_PLAYER!=0){
     var data = $(this).data();
     console.log(data);
-    var $p = $("#player-list").find("tr#player-" + ACTIVE_PLAYER);
-    console.log($p.data());
-    var score = Number($p.data("score")) + Number(data.value);
-    $p.data("score", score);
-    if(data.value > 0){
-      $p.find(".action").text("+" + data.value).fadeIn("fast").fadeOut("slow");
+    if(data.value=="options"){
+      //show complete thingy
+      $("#player-edit-actions").slideToggle();
     }else{
-      $p.find(".action").text(data.value).fadeIn("fast").fadeOut("slow");
+      var $p = $("#player-list").find("tr#player-" + ACTIVE_PLAYER);
+      console.log($p.data());
+      var score = Number($p.data("score")) + Number(data.value);
+      $p.data("score", score);
+      if(data.value > 0){
+        $p.find(".action").text("+" + data.value).fadeIn("fast").fadeOut("slow");
+      }else{
+        $p.find(".action").text(data.value).fadeIn("fast").fadeOut("slow");
+      }
+      $p.find(".score").text(score);
+      socket.emit("update score", $p.data() );
     }
-    $p.find(".score").text(score);
-    socket.emit("update score", $p.data() );
   }else{
+    $("tr:not(:first)").addClass("highlight");
+    setTimeout(function(){
+      console.log("removing class");
+      $("tr").removeClass("highlight");
+    }, 700);
     console.log("NO PLAYER SELECTED!");
   }
 });

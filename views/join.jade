@@ -5,8 +5,7 @@ h2 Join a Game
     for game, game_id in games
       li
         img(src='https://graph.facebook.com/' + game_id + '/picture')
-        a(class="button", href='/game/' + game_id)
-          #{game.owner} 
+        a(class="button", href='/game/' + game_id) Join #{game.owner}?
 - else
   p 
   | No Games Found! <a href="/game/start">Start One?</a>
