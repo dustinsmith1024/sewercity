@@ -9,7 +9,7 @@ a {
 }
 
 #player-list td, th {
-    font-size: 18px;
+    font-size: 21px;
     padding: 5px;
     text-align: center;
 }
@@ -137,13 +137,13 @@ td, th {
                 background: linear-gradient(top, rgba(255,255,255,.2) 0%,rgba(0,0,0,.2) 100%); /* W3C */
           border: 1px solid #888;
           border-color: #AAAAAA #888888 #888888 #AAAAAA;
-          padding: 4px 12px;
+          padding: 6px 14px;
           -moz-border-radius: 3px;
           -webkit-border-radius: 3px;
           border-radius: 3px;
           color: #FFA33F;
           display: inline-block;
-          font-size: 18px;
+          font-size: 21px;
           font-weight: normal;
           text-decoration: none;
           text-shadow: 0 0px rgba(255, 255, 255, .10);
