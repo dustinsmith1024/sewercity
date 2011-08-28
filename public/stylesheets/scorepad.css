@@ -18,7 +18,6 @@ a {
 footer#actions {
   position: fixed;
   bottom: 1px;
-  width: 100%;
 }
 footer#actions div#wrapper {
   text-align: center;
