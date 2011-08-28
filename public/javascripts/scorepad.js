@@ -51,6 +51,9 @@ if($("#fb-root").length){
 }
 socket.on('score-push', function(data) {
     console.log('Received: ', data);
+    if(data.winner){
+      alert("Sorry, " + data("winner_name") + " is the Champ. Better luck next time.");
+    }
     $p = $("tr#player-" + data.player);
     $p.find(".score").text(data.score);
     $p.data("score", data.score);
@@ -72,6 +75,26 @@ $("#player-actions > li > a").live("click", function(event) {
     $p.data("score", score);
     $p.find(".score").text(score);
     socket.emit("update score", $p.data() );
+  }else{
+    console.log("NO PLAYER SELECTED!");
+  }
+});
+
+$("#player-edit-actions > li > a").live("click", function(event) {
+  event.preventDefault();
+  if(ACTIVE_PLAYER!=0){
+    var action = ($(this).attr("href"));
+    console.log(data);
+    var $p = $("#player-list").find("tr#player-" + ACTIVE_PLAYER);
+    console.log($p.data());
+    var score = Number($p.data("score"));
+    $p.data("score", score);
+    if(action=="#winner"){
+      $p.data("winner", ACTIVE_PLAYER);
+      $p.data("winner_name", $p.data("playerName"));
+    }
+    socket.emit("update score", $p.data() );
+    alert("Congrats " + $p.data("playerName") + " you are the Champ!");
   }else{
     console.log("NO PLAYER SELECTED!");
   }

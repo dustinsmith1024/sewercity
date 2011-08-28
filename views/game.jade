@@ -12,30 +12,34 @@
     tbody#player-list
       for player, player_id in game.players
         - if (player.current)
-          tr(id="player-#{player_id}", class="current", data-game-id="#{game_id}", data-player="#{player_id}", data-player-name="#{player.details.name}", data-score="0")
+          tr(id="player-#{player_id}", class="current", data-game-id="#{game_id}", data-player="#{player_id}", data-player-name="#{player.details.name}", data-score="#{player.details.score}")
             td.playerName #{player.details.name}
-            td.score 0
+            td.score #{player.details.score}
         - else
-          tr(id="player-#{player_id}", data-game-id="#{game_id}", data-player="#{player_id}", data-player-name="#{player.details.name}", data-score="0")
+          tr(id="player-#{player_id}", data-game-id="#{game_id}", data-player="#{player_id}", data-player-name="#{player.details.name}", data-score="#{player.details.score}")
             td.playerName #{player.details.name}
-            td.score 0
+            td.score #{player.details.score}
 
-
-  ul#game-actions Actions:
-    li
-      a(href="#add-player", class="add-player")
-        + Player
 
   ul#player-actions Actions:
     li
       a(href="#", data-value="-1")
         |-1
+    li
       a(href="#", data-value="-10")
         |-10
+    li
       a(href="#", data-value="+1")
         |+1
+    li
       a(href="#", data-value="+10")
         |+10
+
+  ul#player-edit-actions Actions:
+    li
+      a(href="#winner") Winner?
+    li
+      a(href="#remove") Remove?
 
 - else
   p Looks like something happend and this is not a valid game ID - SORRY!

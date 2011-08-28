@@ -9,6 +9,39 @@ var io = require('socket.io');
 var _ = require('underscore')._;
 var facebook = require('facebook-graph');
 nko = require('nko')('dHprko2dt540/Tp2');
+var mongoose = require('mongoose');
+
+if(!process.env.PORT){
+console.log("TEST");
+  mongoose.connect('mongodb://localhost/scorepad');
+}else{
+  mongoose.connect('mongodb://heroku_app820700:4e0pmkpmrvj2spvncop65kd2qn@dbh35.mongolab.com:27357/heroku_app820700');
+}
+var Schema = mongoose.Schema
+  , ObjectId = Schema.ObjectId;
+
+var User = new Schema({
+    user    : ObjectId
+  , facebook_id     : Number
+  , wins      : Number
+  , losses      : Number
+});
+
+var Game = new Schema({
+  game : ObjectId,
+  users : [User]
+});
+
+var UserModel = mongoose.model('User', User);
+/* SAMPLE USER MODEL UPDATE
+var user = new UserModel();
+user.facebook_id = 119292929;
+user.wins = 10;
+user.losses = 4;
+user.save(function(err) {
+  console.log(err);
+});
+*/
 
 if(!process.env.PORT){
   var FB_APP_ID = '213668642020319';
@@ -45,15 +78,41 @@ app.get('/', function(req, res){
   // Check if the user is logged in to Facebook
   console.log("COOKIES: ", req.cookies);
   console.log("SESSION: ", req.session);
-  var user = facebook.getUserFromCookie(req.cookies, FB_APP_ID, FB_APP_SECRET);
-  console.log("USER: ", user);
-  if (user) {
+  var f_user = facebook.getUserFromCookie(req.cookies, FB_APP_ID, FB_APP_SECRET);
+  console.log("FACEBOOK USER: ", f_user);
+  if (f_user) {
     // If Logged in grab the graph data
-    var graph = new facebook.GraphAPI(user['access_token']);
-    graph.getObject('me', function(error, user){
-      console.log("user: ", user);
-      //Load the logged in home page
-      res.render('welcome', {title: 'Welcome', user: user});
+    var graph = new facebook.GraphAPI(f_user['access_token']);
+    graph.getObject('me', function(error, f_user){
+      //Check the DB for a user
+      console.log("user: ", f_user);
+      console.log("GAMES COUNT:", Object.keys(GAMES).length);
+      var games = false;
+      var user_has_game = false;
+      if(Object.keys(GAMES).length > 0){
+        games = true;
+      }
+      if(GAMES[f_user.id]){
+        var user_has_game = true;
+      }
+      UserModel.findOne({ facebook_id: f_user.id}, function (err, doc){
+        if(doc){
+          //GO AHEAD
+          console.log(doc);
+          res.render('welcome', {title: 'Welcome', user: f_user, games: games, user_has_game: user_has_game});
+        }else{
+          //Create the user
+          var user = new UserModel();
+          user.facebook_id = f_user.id;
+          user.wins = 0;
+          user.losses = 0;
+          user.save(function(err) {
+            console.log(err);
+            //Load the logged in home page
+            res.render('welcome', {title: 'Welcome', user: f_user, games: games, user_has_game: user_has_game});
+          });
+        }
+      });
     });
   } else {
     res.render('index', { title: 'Log-in' });
@@ -74,15 +133,22 @@ app.get('/game/:action', function(req, res){
     graph.getObject('me', function(error, user){
       console.log("USER: ", user); 
       if (action=="start"){
+        //Starts a new game - also can clear a users game already in progress
+        //Users only allowed one game at a time
         GAMES[user.id] = {owner: user.name, players: {} };
         console.log("Current GAME: ", GAMES[user.id]);
+        user.score = 0;
         GAMES[user.id].players[user.id] = {details: user };
         console.log("ALL GAMES: ", GAMES);
         res.redirect('/game/' + user.id);
       }else if(action=="join"){
         //Need to find current games then parse it for friends
         //Display a list of friends playing then they can select to join
-        console.log("Parse Current Games for Friend ID's!", GAMES);
+        console.log("Parse Current Games for Friend ID's!", GAMES);        
+        _.each(GAMES, function(key, game){
+          console.log("KEY: ", key);
+          console.log(game);
+        });
         res.render('join', {title: 'Join a Game', games: GAMES});
       }else{
         console.log("LOGGED IN AND SOMETHING ELSE!");
@@ -91,7 +157,9 @@ app.get('/game/:action', function(req, res){
         var game_id = req.params.action;
         console.log("GAME_ID: ", game_id);
         if(GAMES[game_id]){
-          GAMES[game_id].players[user.id] = {details: user, current: true};
+          console.log(GAMES[game_id].players[user.id].details);
+          _.extend(GAMES[game_id].players[user.id], {current: true});
+          console.log(GAMES[game_id].players[user.id].details);
         }else{
           GAMES[user.id] = {owner: user.name, players: {} };
           console.log("Current GAME: ", GAMES[user.id]);
@@ -162,6 +230,7 @@ io.sockets.on('connection', function(socket){
 
   socket.on('update score', function(score) {
       console.log('Score ' + score);
+      GAMES[score.gameId].players[score.player].details.score = score.score;
       socket.broadcast.to(score.gameId).emit('score-push', score);
   });
 
