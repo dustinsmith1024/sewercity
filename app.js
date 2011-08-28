@@ -12,7 +12,6 @@ nko = require('nko')('dHprko2dt540/Tp2');
 var mongoose = require('mongoose');
 
 if(!process.env.PORT){
-console.log("TEST");
   mongoose.connect('mongodb://localhost/scorepad');
 }else{
   mongoose.connect('mongodb://heroku_app820700:4e0pmkpmrvj2spvncop65kd2qn@dbh35.mongolab.com:27357/heroku_app820700');
