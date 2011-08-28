@@ -234,9 +234,38 @@ io.sockets.on('connection', function(socket){
   });
 
   socket.on('update score', function(score) {
-      console.log('Score ' + score);
-      GAMES[score.gameId].players[score.player].details.score = score.score;
-      socket.broadcast.to(score.gameId).emit('score-push', score);
+    console.log('Score ' + score);
+    GAMES[score.gameId].players[score.player].details.score = score.score;
+    socket.broadcast.to(score.gameId).emit('score-push', score);
+    if(score.winner){
+      //update the users wins
+      //TODO - Also need to update the losses!
+      //TODO - Post the score to Facebook!
+      _.each(GAMES[score.gameId].players, function(player, player_id){
+        console.log(player, player_id);
+        UserModel.findOne({ facebook_id: player_id}, function (err, user){
+          if(!err){
+            console.log(user);
+            if(player_id==score.winner){
+              user.wins = user.wins + 1;
+            }else{
+              user.losses = user.losses + 1;
+            }
+            user.save(function(err){
+              if(err){
+                console.log(err);
+              }else{
+                console.log("Player updated!", user);
+              }
+            });
+            delete GAMES[score.gameId];
+            console.log(GAMES);
+          }else{
+            console.log("WINNER COULD NOT BE FOUND!");
+          }
+        });
+      });
+    }
   });
 
   socket.on('add player', function(player) {

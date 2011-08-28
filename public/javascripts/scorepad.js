@@ -58,6 +58,7 @@ socket.on('score-push', function(data) {
       }else{
         alert("Sorry, " + data.winner_name + " is the Champ. Better luck next time.");
       }
+      window.location = "/";
     }
     $p = $("tr#player-" + data.player);
     $p.find(".score").text(data.score);
@@ -109,6 +110,7 @@ $("#player-edit-actions > li > a").live("click", function(event) {
     }else{
       alert("Sorry, " + $p.data("playerName") + " is the Champ. Better luck next time.");
     }
+    window.location = "/";
   }else{
     console.log("NO PLAYER SELECTED!");
   }
@@ -137,9 +139,5 @@ $("#player-list tr").live("click", function(event) {
     ACTIVE_PLAYER=0;
   }
 });
-
-function addPlayer(id, name){
-  
-}
 
 });
