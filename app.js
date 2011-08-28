@@ -156,9 +156,15 @@ app.get('/game/:action', function(req, res){
         var game_id = req.params.action;
         console.log("GAME_ID: ", game_id);
         if(GAMES[game_id]){
-          console.log(GAMES[game_id].players[user.id].details);
-          _.extend(GAMES[game_id].players[user.id], {current: true});
-          console.log(GAMES[game_id].players[user.id].details);
+          if(GAMES[game_id].players[user.id]){
+            console.log(GAMES[game_id].players[user.id].details);
+            _.extend(GAMES[game_id].players[user.id], {current: true});
+            console.log(GAMES[game_id].players[user.id].details);
+          }else{
+            console.log("setting up game for newcommer");
+            user.score = 0;
+            GAMES[user.id].players[user.id] = {details: user, current: true };
+          }
         }else{
           GAMES[user.id] = {owner: user.name, players: {} };
           console.log("Current GAME: ", GAMES[user.id]);
