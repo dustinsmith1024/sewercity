@@ -94,17 +94,19 @@ app.get('/', function(req, res){
       if(GAMES[f_user.id]){
         var user_has_game = true;
       }
-      UserModel.findOne({ facebook_id: f_user.id}, function (err, doc){
-        if(doc){
+      UserModel.findOne({ facebook_id: f_user.id}, function (err, db_user){
+        if(db_user){
           //GO AHEAD
-          console.log(doc);
+          console.log(db_user);
+          f_user.wins = db_user.wins;
+          f_user.losses = db_user.losses;
           res.render('welcome', {title: 'Welcome', user: f_user, games: games, user_has_game: user_has_game});
         }else{
           //Create the user
           var user = new UserModel();
           user.facebook_id = f_user.id;
-          user.wins = 0;
-          user.losses = 0;
+          user.wins, f_user = 0;
+          user.losses, f_user = 0;
           user.save(function(err) {
             console.log(err);
             //Load the logged in home page

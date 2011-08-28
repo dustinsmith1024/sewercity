@@ -1,20 +1,40 @@
 !!! 5
 html
   title ScorePad - #{title}
+  |<meta charset="utf-8">
+  |<meta name="description" content="ScorePad is a app for keeping score for card games, board games, etc">
+  |<meta name="author" content="Dustin Smith www.smith1024.com">
+  |<meta content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" name="viewport">
+  |<meta content="yes" name="apple-mobile-web-app-capable">
+  |<meta content="default" name="apple-mobile-web-app-status-bar-style">
+  |<meta name="author" content="">
+  |<!--[if lt IE 9]>
+  |<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  |<![endif]-->
+  link(rel="stylesheet", href="/stylesheets/base.css")
+  link(rel="stylesheet", href="/stylesheets/skeleton.css")
+  link(rel="stylesheet", href="/stylesheets/layout.css")
   link(rel='stylesheet', href='/stylesheets/scorepad.css')
+  |<link rel="shortcut icon" href="/images/favicon.ico">
+  |<link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
+  |<link rel="apple-touch-icon" sizes="72x72" href="/images/apple-touch-icon-72x72.png">
+  |<link rel="apple-touch-icon" sizes="114x114" href="/images/apple-touch-icon-114x114.png">
+
 
   body
-    h1: a(href="/") ScorePad
+    div#container
 
-    section#body!= body
+      h1: a(href="/") ScorePad
 
-    nav#footer
-      ul
-        li: a(href="/", title="Sup Homie?!") Home
+      section#body!= body
+
+      nav#footer
+        ul
+          li: a(class="button", href="/", title="Sup Homie?!") Home
       
-      | Voting thing here
-      // <iframe src="http://nodeknockout.com/iframe/sewercity" frameborder=0 scrolling=no allowtransparency=true width=115 height=25>
-      // </iframe> 
+        | <iframe src="http://nodeknockout.com/iframe/sewercity" frameborder=0 scrolling=no allowtransparency=true width=115 height=25>
+        | </iframe> 
+
     section#js-loads
       script(type='text/javascript', src='http://connect.facebook.net/en_US/all.js')
       script(type='text/javascript', src='https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js');

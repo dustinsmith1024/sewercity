@@ -7,39 +7,40 @@
   table
     thead
       tr
-        th
-          Player
-        th
-          Score
+        th Player
+        th Score
+        th 
     tbody#player-list
       for player, player_id in game.players
         - if (player_id==current_user_id)
           tr(id="player-#{player_id}", class="current", data-game-id="#{game_id}", data-player="#{player_id}", data-player-name="#{player.details.name}", data-score="#{player.details.score}")
             td.playerName #{player.details.name}
             td.score #{player.details.score}
+            td.action 
         - else
           tr(id="player-#{player_id}", data-game-id="#{game_id}", data-player="#{player_id}", data-player-name="#{player.details.name}", data-score="#{player.details.score}")
             td.playerName #{player.details.name}
             td.score #{player.details.score}
+            td.action 
 
 
-  ul#player-actions Actions:
+  ul#player-actions.hidden
     li
-      a(href="#", data-value="-1")
+      a(class="button", href="#", data-value="-1")
         |-1
     li
-      a(href="#", data-value="-10")
+      a(class="button", href="#", data-value="-10")
         |-10
     li
-      a(href="#", data-value="+1")
+      a(class="button", href="#", data-value="+1")
         |+1
     li
-      a(href="#", data-value="+10")
+      a(class="button", href="#", data-value="+10")
         |+10
 
-  ul#player-edit-actions Actions:
+  ul#player-edit-actions.hidden
     li
-      a(href="#winner") Confim Winner?
+      a(class="button", href="#winner") Confim Winner?
 
 - else
   p Looks like something happend and this is not a valid game ID - SORRY!

@@ -1,6 +1,11 @@
-h2 Welcome #{user.first_name}
+h2 What up #{user.first_name}?
 
-p What do you want to do?
+p You can host 1 game and join as many as you would like. You can close your hosted game and come back later if you need to.
+
+ul#record Record
+  li Wins: #{user.wins}
+  li Losses: #{user.losses}
+
 
 ul#game-actions
   - if (user_has_game)

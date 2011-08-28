@@ -134,8 +134,10 @@ $("#player-list tr").live("click", function(event) {
     console.log("clicked: ", data.player);
     $("#player-list > .active").removeClass("active");
     $(this).toggleClass("active");
+    $("#player-actions, #player-edit-actions").toggle("fast");
   }else{
     $(this).removeClass("active");
+    $("#player-actions, #player-edit-actions").toggle("fast");
     ACTIVE_PLAYER=0;
   }
 });
